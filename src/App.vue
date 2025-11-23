@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import UserPage from './pages/UserPage.vue'  
 </script>
 
 <template>
   <section>
-    hi
-
-    <HelloWorld />
+    <UserPage />
   </section>
 </template>
 

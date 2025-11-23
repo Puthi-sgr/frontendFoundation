@@ -24,8 +24,8 @@
 <script setup lang="ts">
 import { computed } from "vue"
 
-const props = defineProps<{
-    username: string
+const props = defineProps<{ //Define props is where we set the properties that this component wants to receive from its parent
+    username: string; //This is read only, and the value is controlled by the parent
 }>()
 
 const initial = computed(() => (
