@@ -1,57 +1,44 @@
 <template>
     <div class="user-page">
         <h1>User Page</h1>
-        <UserBadge v-for="(user, index) in users" :key="user.name" :name="user.name" :role="user.role"
+        <UserBadge v-for="(user, index) in userStore.filteredUsers" :key="index" :name="user.name" :role="user.role"
             :status="user.status" @status-changed="handleStatusChanged(index, $event)"
-            @name-changed="handleNameChanged(index, $event)" />
+            @name-changed="handleNameChanged(index, $event)" @select-user="handleSelectUser(index)" />
         <!-- The $event is the payload from the  userBadge component and this parent will use it to work with the handleStatusChanged method -->
+        <button @click="userStore.setFilter('all')">All</button>
+        <button @click="userStore.setFilter('active')">Active</button>
+        <button @click="userStore.setFilter('admin')">Admins</button>
+        <button @click="userStore.setFilter('inactive')">Inactive</button>
+        <button @click="userStore.setFilter('user')">Users</button>
     </div>
 
 </template>
 
 <script setup lang="ts">
+//We have a centeralized store that we can use now which is the pinia
+//The page will be the heavy user why? 
+//It will be the main source that pass down the data from the store
+//In big apps/best practice, is that smaller components under this page should not have direct access to the store.
 import UserBadge from '../components/user/UserBadge.vue';
-import { reactive } from 'vue';
+import { useUserStore } from '../stores/userStore';
 
-interface UserModel {
-    name: string;
-    role: string;
-    status: boolean;
+//This user page smaller component  will use data down events up approach  due to its small size, for bigger nested comps, component will directly access the store to avoid props drilling
+
+//A store instance that consist of universal truth for USER data
+const userStore = useUserStore(); //This is the centralized data, store, tools that this page can grab from
+
+
+const handleStatusChanged = (index: number, newStatus: boolean) => {
+    userStore.toggleStatus(index, newStatus);  //Calls the store method and mutate data , but store is the actual data changer
 }
 
-//index is like "FROM THAT INDEX IN THE ARRAY" 
-function handleStatusChanged(index: number, newStatus: boolean) {
-    const user = users[index];
-    if (user) {
-        user.status = newStatus;
-    }
+const handleNameChanged = (index: number, newName: string) => {
+    userStore.renameUser(index, newName);
 }
 
-function handleNameChanged(index: number, newName: string) {
-    const user = users[index];
-    if (user) {
-        user.name = newName;
-    }
+const handleSelectUser = (index: number) => {
+    userStore.selectUser(index);
 }
-
-const users = reactive<UserModel[]>([
-    { //Reactive is another way to achieve reactivity  but for objects this object will be wrapped in proxy to track changes so JS can know has specifically changed.
-        name: "SPuthi",
-        role: "Admin",
-        status: true
-        //These values are just initial values 
-    },
-    {
-        name: "John Doe",
-        role: "User",
-        status: false
-    },
-    {
-        name: "Jane Smith",
-        role: "Moderator",
-        status: true
-    }
-])
 
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="user-badge">
+  <div @click="selectUser" class="user-badge">
     <h2>{{ CardTitle }}</h2>
 
     <UserAvatar :username="user.name" />
@@ -25,6 +25,9 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import UserAvatar from './UserAvatar.vue';
+import { useUserStore } from '../../stores/userStore';
+
+const userStore = useUserStore();
 
 const user = defineProps<{
   name: string;
@@ -34,8 +37,10 @@ const user = defineProps<{
 const emits = defineEmits<{ //Events to emit for the parent component to listen to
   //The new status is a payload send along with the event
   (e: 'status-changed', newStatus: boolean): void, //It can emit this event called status changed, when it does
-  (e: 'name-changed', newName: string): void
+  (e: 'name-changed', newName: string): void,
   //it is up for the parent to handle this emit or not
+  (e: 'select-user'): void
+
 }>();
 
 const mutableName = ref(user.name);
@@ -46,6 +51,7 @@ const statusLabel = computed<string>( //Compute is the result of calculation or 
     return user.status ? "IsActive" : "IsInactive";
   }
 )
+
 
 //Watch also a reactivity API that  for mostly logging 
 watch(
@@ -63,6 +69,10 @@ const nameChangeHandler = () => {
 const toggleStatus = () => {
   const newStatus = !user.status;
   emits('status-changed', newStatus); //This emits back to the parent.
+}
+
+const selectUser = () => {
+  emits('select-user');
 }
 </script>
 
