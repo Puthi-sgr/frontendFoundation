@@ -1,15 +1,12 @@
 <script setup lang="ts">
-import UserPage from './pages/UserPage.vue'
 import UserHeader from './components/user/UserHeader.vue';
-import UserSummary from './components/user/UserSummary.vue';
 </script>
 
 <template>
   <section class="app-layout">
     <UserHeader />
     <div class="main-content">
-      <UserSummary /> <!-- Add here for global sidebar -->
-      <UserPage />
+      <router-view />
     </div>
   </section>
 </template>
@@ -21,7 +18,7 @@ import UserSummary from './components/user/UserSummary.vue';
 }
 
 .main-content {
-  display: flex;
+  display: grid;
 }
 
 .user-side-widget {

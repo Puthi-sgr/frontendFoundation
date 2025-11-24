@@ -1,9 +1,16 @@
 <template>
     <div class="user-page">
         <h1>User Page</h1>
-        <UserBadge v-for="(user, index) in userStore.filteredUsers" :key="index" :name="user.name" :role="user.role"
-            :status="user.status" @status-changed="handleStatusChanged(index, $event)"
-            @name-changed="handleNameChanged(index, $event)" @select-user="handleSelectUser(index)" />
+
+
+        <router-link v-for="(user, index) in userStore.filteredUsers" :key="index" :to="`/users/${index}`">
+            <UserBadge :name="user.name" :role="user.role" :status="user.status"
+                @status-changed="handleStatusChanged(index, $event)" @name-changed="handleNameChanged(index, $event)"
+                @select-user="handleSelectUser(index)">
+                <router-link :to="`/user/${index}`">Go to User Detail page</router-link>
+            </UserBadge>
+        </router-link>
+
         <!-- The $event is the payload from the  userBadge component and this parent will use it to work with the handleStatusChanged method -->
         <button @click="userStore.setFilter('all')">All</button>
         <button @click="userStore.setFilter('active')">Active</button>

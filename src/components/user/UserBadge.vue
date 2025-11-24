@@ -25,9 +25,6 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import UserAvatar from './UserAvatar.vue';
-import { useUserStore } from '../../stores/userStore';
-
-const userStore = useUserStore();
 
 const user = defineProps<{
   name: string;

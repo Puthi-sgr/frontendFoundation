@@ -5,9 +5,10 @@
         </div>
         <nav>
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Profile</a></li>
-                <li><a href="#">Logout</a></li>
+                <li><router-link to="/">Dashboard</router-link></li>
+                <li><router-link to="/users">Users</router-link></li>
+                <li><router-link to="/settings">Settings</router-link></li>
+
             </ul>
         </nav>
     </header>
