@@ -27,9 +27,7 @@ const routes = [
         path: '/users/:index',
         name: 'UserDetail',
         component: UserDetailPage
-
     }
-
 ]
 
 const router = createRouter({

@@ -2,7 +2,7 @@
     <div class="user-page">
         <h1>User Page</h1>
 
-
+        <UserActivityBanner />
         <router-link v-for="(user, index) in userStore.filteredUsers" :key="index" :to="`/users/${index}`">
             <UserBadge :name="user.name" :role="user.role" :status="user.status"
                 @status-changed="handleStatusChanged(index, $event)" @name-changed="handleNameChanged(index, $event)"
@@ -27,6 +27,7 @@
 //It will be the main source that pass down the data from the store
 //In big apps/best practice, is that smaller components under this page should not have direct access to the store.
 import UserBadge from '../components/user/UserBadge.vue';
+import UserActivityBanner from '../components/user/UserActivityBanner.vue';
 import { useUserStore } from '../stores/userStore';
 
 //This user page smaller component  will use data down events up approach  due to its small size, for bigger nested comps, component will directly access the store to avoid props drilling
