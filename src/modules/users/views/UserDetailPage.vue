@@ -7,7 +7,7 @@
             <div class="user-info">
                 <div class="info-item">
                     <label>Index:</label>
-                    <span>{{ index ?? 'N/A' }}</span>
+                    <span>{{ selectedUser.id ?? 'N/A' }}</span>
                 </div>
                 <div class="info-item">
                     <label>Name:</label>
@@ -32,16 +32,21 @@
 </template>
 
 <script setup lang="ts">
-import { useUserStore } from '../stores/userStore';
+import { useUserStore } from '../store/useUserStore';
 import { storeToRefs } from 'pinia';
+import { onMounted } from 'vue';
 import { useRoute } from 'vue-router'; //This is vue router
 
 
 const route = useRoute(); //Vue router is one for the whole app, if u use this, this means grabbing the Vue router, now you can access to what ever vue router is doing
 const userStore = useUserStore();
 
-const index = Number(route.params.index);
-const { selectedUser } = storeToRefs(userStore);
+const { selectedUser } = storeToRefs(userStore); //This local referrence in the memeory 
+const userId = Number(route.params.id);
+
+onMounted(() => {
+    userStore.loadUserById(userId);
+});
 </script>
 
 <style scoped>

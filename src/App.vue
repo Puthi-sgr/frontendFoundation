@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import UserHeader from './components/user/UserHeader.vue';
+import UserHeader from './core/layout/AppHeader.vue';
 </script>
 
 <template>

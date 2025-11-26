@@ -4,6 +4,7 @@
 
     <UserAvatar :username="user.name" />
 
+    <p><strong>ID: </strong>{{ user.id }}</p>
     <p><strong>Name: </strong>{{ user.name }}</p>
     <p><strong>Role: </strong>{{ user.role }}</p>
     <p><strong>Status: </strong>{{ statusLabel }}</p>
@@ -27,6 +28,7 @@ import { ref, computed, watch } from 'vue';
 import UserAvatar from './UserAvatar.vue';
 
 const user = defineProps<{
+  id: number;
   name: string;
   role: string;
   status: boolean;
@@ -71,6 +73,7 @@ const toggleStatus = () => {
 const selectUser = () => {
   emits('select-user');
 }
+
 </script>
 
 <style scoped>

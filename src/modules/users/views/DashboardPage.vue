@@ -58,8 +58,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useUserStore } from '../stores/userStore';
+import { onMounted, ref } from 'vue';
+import { useUserStore } from '../store/useUserStore';
 import { storeToRefs } from 'pinia';
 
 const collapsed = ref(false);
@@ -67,6 +67,10 @@ const toggle = () => (collapsed.value = !collapsed.value);
 
 const userStore = useUserStore();
 const { totalUsers, activeCount, adminCount } = storeToRefs(userStore); //Becomes reactive
+
+onMounted(() => {
+    userStore.loadUsers();
+});
 </script>
 
 <style scoped>

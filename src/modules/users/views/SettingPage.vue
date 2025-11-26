@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { useUserStore } from '../stores/userStore';
+import { useUserStore } from '../store/useUserStore';
 
 const userStore = useUserStore();
 
